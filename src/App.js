@@ -20,9 +20,6 @@ class App extends Component {
        <Header />
        <Switch>
 
-        {/* <Route to='/' render={()=>
-        <Redirect path='/InputData'/>
-      }/> */}
         <Route exact path='/InputData' component={InputData}/>
         <Route exact path='/family' component={family}/>
         <Route exact to='/printData' component={printData}/>
