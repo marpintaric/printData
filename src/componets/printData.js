@@ -1,55 +1,56 @@
 import React, { Component } from 'react'
+import { store } from '../utils/store';
+import ListItem from './ListItem';
 
 
-class printData extends Component {
-    constructor(props){
-      super(props);
-      this.state = {
-        podaci: [],
-        ispisPodataka: false,
-        family: null,
-        ispisObjekta: false,
-      }
-  
-      this.ispisPodatakaHandler = this.ispisPodatakaHandler.bind(this)
-  
-    }
-    componentDidMount (){
-     const podaci = localStorage.getItem('podaci')
-     this.setState({podaci: podaci ? [...JSON.parse(podaci)] : []}, )
-      //this.setState({ podaci: Data.podaci})
-    }
-    ispisPodatakaHandler = () => {
-        let {ispisPodataka} = this.state
-        this.setState({
-          ispisPodataka: !ispisPodataka
-          
-        })
-      }
-  
-     
-  
-  
-    render() {
-      const {podaci, ispisPodataka,} = this.state;
-      return (
-        <div className="App">
-         
-          <button onClick={this.ispisPodatakaHandler}>Ispis podaci</button>
-            <ul>
-              {ispisPodataka &&
-                podaci.map(hit => {
-               return <li key={hit.id}>
-                <p>Ime: {hit.name}</p>
-                <p>Prezime: {hit.lastName}</p>
-                <p>Adresa: {hit.address}</p> <br />
-              </li>})
-              }
-            </ul>
-        
-        </div>
-      );
-    }
+export class printData extends Component {
+  state = {
+    users: [],
+    sorted: "name",
+    filtered: "",
   }
-  
-  export default printData;
+
+  componentDidMount() {
+    this.setState({ users: store.getUserList() });
+  }
+
+  onInputChange = (event) => {
+    this.setState({ filtered: event.target.value });
+  }
+
+  onSortChange = (event) => {
+    this.setState({ sorted: event.target.value })
+  };
+
+  render() {
+    const { users, sorted, filtered } = this.state;
+
+
+    console.log(
+      users.map(user => user.name)
+    );
+
+    return (
+      <div className="App">
+        <select
+          value={sorted}
+          onChange={this.onSortChange}>
+          <option value="name">Ime</option>
+          <option value="lastName">Prezime</option>
+          <option value="address">Adresa</option>
+        </select>
+        <input
+          type="search"
+          placeholder="Upiši tekst"
+          value={filtered}
+          onChange={this.onInputChange}
+        />
+        <ul>
+          {users.filter(user => user[sorted].toLowerCase().includes(filtered.toLowerCase()))
+            .map(user => (<ListItem key={user.id} user={user} name="wuhu" />))}
+        </ul>
+      </div>
+    );
+  }
+}
+

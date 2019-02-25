@@ -1,35 +1,35 @@
 import React, { Component } from 'react'
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css'
 import Header from './componets/Header';
-import InputData from './componets/InputData'
+import { InputData } from './componets/InputData'
 import family from './componets/family'
-import printData from './componets/printData'
-import Data from './podaci'
+import { printData } from './componets/printData'
+import { store } from './utils/store';
 
 class App extends Component {
-  
-  componentDidMount (){
-    localStorage.setItem("podaci", JSON.stringify(Data.podaci))
+
+  componentDidMount() {
+    store.getUserList();
   }
-  
-  render() { 
+
+  render() {
     return (
 
-       <div className="App">
-       <Header />
-       <Switch>
+      <div className="App">
+        <Header />
+        <Switch>
 
-        {/* <Route to='/' render={()=>
+          {/* <Route to='/' render={()=>
         <Redirect path='/InputData'/>
       }/> */}
-        <Route exact path='/InputData' component={InputData}/>
-        <Route exact path='/family' component={family}/>
-        <Route exact to='/printData' component={printData}/>
-       </Switch>
-       </div>
+          <Route path='/InputData' component={InputData} />
+          <Route path='/family' component={family} />
+          <Route to='/' component={printData} />
+        </Switch>
+      </div>
 
-    
+
     );
   }
 }

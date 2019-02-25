@@ -13,7 +13,7 @@ class Header extends Component {
          <button onClick={this.checkOutFamily}>Obitelj</button>
          <button onClick={this.saveData}>Upis Podataka</button> */}
 
-         <Link style={linkStyle}  to="/printData">Ispis Podataka</Link> I
+         <Link style={linkStyle} to="/">Ispis Podataka</Link> I
          <Link style={linkStyle} to="/family">Obitelj</Link> I
          <Link style={linkStyle} to="/InputData">Upis Podataka</Link>
          </header>
